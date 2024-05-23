@@ -4,7 +4,7 @@ import grpc
 import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from . import user_pb2 as user__pb2
+import user_pb2 as user__pb2
 
 GRPC_GENERATED_VERSION = '1.64.0'
 GRPC_VERSION = grpc.__version__
@@ -45,14 +45,14 @@ class UserStub(object):
                 request_serializer=user__pb2.PageInfo.SerializeToString,
                 response_deserializer=user__pb2.UserListResponse.FromString,
                 _registered_method=True)
-        self.GetUserByMobile = channel.unary_unary(
-                '/User/GetUserByMobile',
-                request_serializer=user__pb2.MobileRequest.SerializeToString,
-                response_deserializer=user__pb2.UserInfoResponse.FromString,
-                _registered_method=True)
         self.GetUserById = channel.unary_unary(
                 '/User/GetUserById',
                 request_serializer=user__pb2.IdRequest.SerializeToString,
+                response_deserializer=user__pb2.UserInfoResponse.FromString,
+                _registered_method=True)
+        self.GetUserByMobile = channel.unary_unary(
+                '/User/GetUserByMobile',
+                request_serializer=user__pb2.MobileRequest.SerializeToString,
                 response_deserializer=user__pb2.UserInfoResponse.FromString,
                 _registered_method=True)
         self.CreateUser = channel.unary_unary(
@@ -76,13 +76,13 @@ class UserServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetUserByMobile(self, request, context):
+    def GetUserById(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetUserById(self, request, context):
+    def GetUserByMobile(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -108,14 +108,14 @@ def add_UserServicer_to_server(servicer, server):
                     request_deserializer=user__pb2.PageInfo.FromString,
                     response_serializer=user__pb2.UserListResponse.SerializeToString,
             ),
-            'GetUserByMobile': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUserByMobile,
-                    request_deserializer=user__pb2.MobileRequest.FromString,
-                    response_serializer=user__pb2.UserInfoResponse.SerializeToString,
-            ),
             'GetUserById': grpc.unary_unary_rpc_method_handler(
                     servicer.GetUserById,
                     request_deserializer=user__pb2.IdRequest.FromString,
+                    response_serializer=user__pb2.UserInfoResponse.SerializeToString,
+            ),
+            'GetUserByMobile': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetUserByMobile,
+                    request_deserializer=user__pb2.MobileRequest.FromString,
                     response_serializer=user__pb2.UserInfoResponse.SerializeToString,
             ),
             'CreateUser': grpc.unary_unary_rpc_method_handler(
@@ -167,33 +167,6 @@ class User(object):
             _registered_method=True)
 
     @staticmethod
-    def GetUserByMobile(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/User/GetUserByMobile',
-            user__pb2.MobileRequest.SerializeToString,
-            user__pb2.UserInfoResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def GetUserById(request,
             target,
             options=(),
@@ -209,6 +182,33 @@ class User(object):
             target,
             '/User/GetUserById',
             user__pb2.IdRequest.SerializeToString,
+            user__pb2.UserInfoResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetUserByMobile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/User/GetUserByMobile',
+            user__pb2.MobileRequest.SerializeToString,
             user__pb2.UserInfoResponse.FromString,
             options,
             channel_credentials,

@@ -4,8 +4,8 @@ option go_package = ".;proto";
 
 service User {
   rpc GetUserList(PageInfo) returns (UserListResponse) {}
-  rpc GetUserByMobile(MobileRequest) returns (UserInfoResponse) {}
   rpc GetUserById(IdRequest) returns (UserInfoResponse) {}
+  rpc GetUserByMobile(MobileRequest) returns (UserInfoResponse) {}
   rpc CreateUser(CreateUserInfo) returns (UserInfoResponse) {}
   rpc UpdateUser(UpdateUserInfo) returns (google.protobuf.Empty) {}
 
@@ -28,17 +28,13 @@ message CreateUserInfo {
   string nickname = 1;
   string password = 2;
   string mobile = 3;
-  uint64 birthday = 4;
 }
 
 message UpdateUserInfo {
   int64 id = 1;
   string nickname = 2;
-  string mobile = 3;
-  string password = 4;
-  uint64 birthday = 5;
-  string gender = 6;
-  int32 role = 7;
+  string gender = 3;
+  uint64 birthday = 4;
 }
 
 message UserListResponse {
