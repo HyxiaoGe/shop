@@ -3,3 +3,4 @@ pymysql
 grpcio
 grpcio-tools
 protobuf
+loguru

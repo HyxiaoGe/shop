@@ -2,9 +2,11 @@ import time
 
 from user.proto import user_pb2_grpc, user_pb2
 from user.model.models import User
+from loguru import logger
 
 
 class UserService(user_pb2_grpc.UserServicer):
+    @logger.catch()
     def GetUserList(self, request: user_pb2.PageInfo, context):
         # 获取用户的列表
         rsp = user_pb2.UserListResponse()
@@ -13,7 +15,6 @@ class UserService(user_pb2_grpc.UserServicer):
         rsp.total = users.count()
 
         start = 0
-        page = 1
         per_page_num = 10
         if request.pageSize:
             per_page_num = request.pageSize
