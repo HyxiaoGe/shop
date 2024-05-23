@@ -1,2 +1,5 @@
 peewee
 pymysql
+grpcio
+grpcio-tools
+protobuf

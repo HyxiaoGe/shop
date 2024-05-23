@@ -32,4 +32,8 @@ class User(BaseModel):
 
 
 if __name__ == '__main__':
-    settings.DB.create_tables([User])
+    # settings.DB.create_tables([User])
+    users = User.select()
+    users = users.limit(2).offset(2)
+    for user in users:
+        print(user.nick_name)

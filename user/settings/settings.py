@@ -7,4 +7,4 @@ class ReconnectMySQLDatabase(ReconnectMixin, PooledMySQLDatabase):
     pass
 
 
-DB = ReconnectMySQLDatabase('shop_user', user='root', password='root', host='47.119.22.7', max_connections=8)
+DB = ReconnectMySQLDatabase('shop_user', user='root', password='hyxiao', host='127.0.0.1', max_connections=8)
