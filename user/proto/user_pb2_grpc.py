@@ -4,7 +4,7 @@ import grpc
 import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-import user_pb2 as user__pb2
+from . import user_pb2 as user__pb2
 
 GRPC_GENERATED_VERSION = '1.64.0'
 GRPC_VERSION = grpc.__version__
@@ -65,6 +65,11 @@ class UserStub(object):
                 request_serializer=user__pb2.UpdateUserInfo.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.CheckPassword = channel.unary_unary(
+                '/User/CheckPassword',
+                request_serializer=user__pb2.PasswordCheckInfo.SerializeToString,
+                response_deserializer=user__pb2.CheckResponse.FromString,
+                _registered_method=True)
 
 
 class UserServicer(object):
@@ -100,6 +105,12 @@ class UserServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CheckPassword(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UserServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -127,6 +138,11 @@ def add_UserServicer_to_server(servicer, server):
                     servicer.UpdateUser,
                     request_deserializer=user__pb2.UpdateUserInfo.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'CheckPassword': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckPassword,
+                    request_deserializer=user__pb2.PasswordCheckInfo.FromString,
+                    response_serializer=user__pb2.CheckResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -264,6 +280,33 @@ class User(object):
             '/User/UpdateUser',
             user__pb2.UpdateUserInfo.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CheckPassword(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/User/CheckPassword',
+            user__pb2.PasswordCheckInfo.SerializeToString,
+            user__pb2.CheckResponse.FromString,
             options,
             channel_credentials,
             insecure,
