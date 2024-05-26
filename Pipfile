@@ -11,6 +11,8 @@ grpcio-tools = "*"
 cryptography = "*"
 loguru = "*"
 passlib = "*"
+python-consul2 = "*"
+protobuf = "==3.20"
 
 [dev-packages]
 
