@@ -66,7 +66,7 @@ def serve():
 
     logger.info(f"服务注册开始")
     register = consul.ConsulRegister(settings.CONSUL_HOST, settings.CONSUL_PORT)
-    if not register.register(name=settings.SERVICE_NAME, id=settings.SERVICE_NAME, address=args.ip, port=args.port, tags=settings.SERVICE_TAGS, check=None):
+    if not register.register(name=settings.SERVICE_NAME, id=settings.SERVICE_NAME, address=settings.NGROK_ADDRESS, port=settings.NGROK_PORT, tags=settings.SERVICE_TAGS, check=None):
         logger.info(f"服务注册失败")
         sys.exit(0)
     logger.info(f"服务注册成功")
