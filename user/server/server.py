@@ -14,6 +14,7 @@ from user.proto import user_pb2_grpc
 from common.register import consul
 from user.settings import settings
 
+
 # BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 # sys.path.append(BASE_DIR)
 
@@ -21,12 +22,14 @@ def on_exit(signo, frame):
     logger.info("Shutting down server...")
     sys.exit(0)
 
+
 def get_free_tcp_port():
     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcp.bind(("", 0))
     _, port = tcp.getsockname()
     tcp.close()
     return port
+
 
 def serve():
     parser = argparse.ArgumentParser()
@@ -66,7 +69,7 @@ def serve():
 
     logger.info(f"服务注册开始")
     register = consul.ConsulRegister(settings.CONSUL_HOST, settings.CONSUL_PORT)
-    if not register.register(name=settings.SERVICE_NAME, id=settings.SERVICE_NAME, address=args.ip, port=args.port, tags=settings.SERVICE_TAGS, check=None):
+    if not register.register(name=settings.SERVICE_NAME, id=settings.SERVICE_NAME, address=settings.NGROK_ADDRESS, port=settings.NGROK_PORT, tags=settings.SERVICE_TAGS, check=None):
         logger.info(f"服务注册失败")
         sys.exit(0)
     logger.info(f"服务注册成功")

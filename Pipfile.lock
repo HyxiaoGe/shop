@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "526742305d9bb65bee063a4e2f7550fac310d6458af7171a473a7f7441af5494"
+            "sha256": "542916b4b1530acb6532b7697276656e1ad340c8d90c772846dd19b5a08677bb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -347,6 +347,13 @@
             "index": "pypi",
             "markers": "python_version >= '3.5'",
             "version": "==0.7.2"
+        },
+        "nacos-sdk-python": {
+            "hashes": [
+                "sha256:79eef4e33d24e7c01cec96702b3d9ba5a75f6df6c3cab3ab762beb9db50aa90f"
+            ],
+            "index": "pypi",
+            "version": "==0.1.14"
         },
         "passlib": {
             "hashes": [
