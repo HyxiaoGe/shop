@@ -78,4 +78,5 @@ def serve():
 
 if __name__ == '__main__':
     logging.basicConfig()
+    settings.client.add_config_watcher(settings.NACOS["DataId"], settings.NACOS["Group"], settings.update_config)
     serve()
