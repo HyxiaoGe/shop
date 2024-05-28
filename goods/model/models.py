@@ -113,4 +113,4 @@ if __name__ == "__main__":
     #     print(c.name, c.id)
     # c1 = Category.get(Category.id==1)
     # c1.delete_instance(permanently=True)
-    # # Category.delete().where(Category.id==2).execute()
+    # Category.delete().where(Category.id==2).execute()
