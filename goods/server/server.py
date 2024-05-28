@@ -9,10 +9,10 @@ import grpc
 from loguru import logger
 
 from common.grpc_health.v1 import health_pb2_grpc, health
-from user.handlers.user import UserService
-from user.proto import user_pb2_grpc
 from common.register import consul
-from user.settings import settings
+from goods.handler.goods import GoodsService
+from goods.proto import goods_pb2_grpc, goods_pb2
+from goods.settings import settings
 
 
 # BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
@@ -52,10 +52,9 @@ def serve():
     else:
         port = args.port
 
-    # logger.add("logs/user_server_{time}.log")
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     # 注册用户服务
-    user_pb2_grpc.add_UserServicer_to_server(UserService(), server)
+    goods_pb2_grpc.add_GoodsServicer_to_server(GoodsService(), server)
     # 注册健康检查服务
     health_pb2_grpc.add_HealthServicer_to_server(health.HealthServicer(), server)
     server.add_insecure_port('[::]:50051')
@@ -67,12 +66,12 @@ def serve():
     logger.info("Starting server. Listening on port 50051.")
     server.start()
 
-    logger.info(f"用户服务注册开始")
+    logger.info(f"商品服务注册开始")
     register = consul.ConsulRegister(settings.CONSUL_HOST, settings.CONSUL_PORT)
     if not register.register(name=settings.SERVICE_NAME, id=settings.SERVICE_NAME, address=settings.NGROK_ADDRESS, port=settings.NGROK_PORT, tags=settings.SERVICE_TAGS, check=None):
-        logger.info(f"用户服务注册失败")
+        logger.info(f"商品服务注册失败")
         sys.exit(0)
-    logger.info(f"用户服务注册成功")
+    logger.info(f"商品服务注册成功")
     server.wait_for_termination()
 
 
