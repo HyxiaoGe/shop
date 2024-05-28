@@ -9,7 +9,7 @@ from goods.model.models import Goods, Category, Brands, Banner, GoodsCategoryBra
 from goods.proto import goods_pb2_grpc, goods_pb2
 
 
-class GoodsServicer(goods_pb2_grpc.GoodsServicer):
+class GoodsService(goods_pb2_grpc.GoodsServicer):
     def category_model_to_dict(self, category):
         re = {}
 
