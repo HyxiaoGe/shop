@@ -14,6 +14,7 @@ passlib = "*"
 python-consul2 = "*"
 protobuf = "==3.20"
 nacos-sdk-python = "*"
+redis = "*"
 
 [dev-packages]
 

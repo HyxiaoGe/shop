@@ -10,9 +10,9 @@ from loguru import logger
 
 from common.grpc_health.v1 import health_pb2_grpc, health
 from common.register import consul
-from goods.handler.goods import GoodsService
-from goods.proto import goods_pb2_grpc, goods_pb2
-from goods.settings import settings
+from inventory.handler.inventory import InventoryService
+from inventory.proto import inventory_pb2_grpc, inventory_pb2
+from inventory.settings import settings
 
 
 # BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
@@ -54,10 +54,10 @@ def serve():
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     # 注册用户服务
-    goods_pb2_grpc.add_GoodsServicer_to_server(GoodsService(), server)
+    inventory_pb2_grpc.add_InventoryServicer_to_server(InventoryService(), server)
     # 注册健康检查服务
     health_pb2_grpc.add_HealthServicer_to_server(health.HealthServicer(), server)
-    server.add_insecure_port('[::]:50052')
+    server.add_insecure_port('[::]:50053')
 
     # 主进程退出信号监听
     signal.signal(signal.SIGINT, on_exit)
@@ -66,12 +66,12 @@ def serve():
     logger.info("Starting server. Listening on port 50051.")
     server.start()
 
-    logger.info(f"商品服务注册开始")
+    logger.info(f"库存服务注册开始")
     register = consul.ConsulRegister(settings.CONSUL_HOST, settings.CONSUL_PORT)
     if not register.register(name=settings.SERVICE_NAME, id=settings.SERVICE_NAME, address=settings.NGROK_ADDRESS, port=settings.NGROK_PORT, tags=settings.SERVICE_TAGS, check=None):
-        logger.info(f"商品服务注册失败")
+        logger.info(f"库存服务注册失败")
         sys.exit(0)
-    logger.info(f"商品服务注册成功")
+    logger.info(f"库存服务注册成功")
     server.wait_for_termination()
 
 
